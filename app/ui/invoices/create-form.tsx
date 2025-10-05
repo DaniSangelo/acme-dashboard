@@ -17,7 +17,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
   const [state, formAction] = useActionState(createInvoice, initialState);
 
   return (
-    <form action={formAction}>
+    <form action={formAction} noValidate>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -29,10 +29,10 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               id="customer"
               name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
+              defaultValue={state.values?.customerId ?? ""}
               aria-describedby="customer-error"
             >
-              <option value="" disabled>
+              <option value="">
                 Select a customer
               </option>
               {customers.map((customer) => (
