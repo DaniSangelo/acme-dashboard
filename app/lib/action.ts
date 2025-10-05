@@ -13,7 +13,12 @@ export type State = {
     amount?: string[];
     status?: string[];
   };
-  message?: string | null;
+  message: string;
+  values?: {
+    customerId?: string;
+    amount?: number;
+    status?: string;
+  };
 };
 
 const FormSchema = z.object({
@@ -39,10 +44,14 @@ export async function createInvoice(prevState: State, formData: FormData) {
     const validatedData = CreateInvoice.safeParse({ customerId, amount, status })
 
     if (!validatedData.success) {
-      console.log(validatedData);
       return {
         errors: validatedData.error.flatten().fieldErrors,
-        message: 'Missing Fields. Failed to Create Invoice.',
+        message: '',
+        values: {
+          customerId: String(customerId),
+          amount: Number(amount),
+          status: String(status),
+        },
       };
     }
 
@@ -74,7 +83,12 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
     if (!validatedData.success) {
     return {
       errors: validatedData.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: '',
+      values: {
+        customerId: formData.get('customerId') as string,
+        amount: Number(formData.get('amount')),
+        status: formData.get('status') as string,
+      },
     };
   }
  

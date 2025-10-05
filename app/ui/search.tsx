@@ -11,7 +11,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const TIME_TO_TRIGGER_IN_MS = 300
 
   const handleSearch = useDebouncedCallback((term) => {
-    console.log(term)
     const params = new URLSearchParams(searchParams)
     if (term) {
       params.set('query', term)
